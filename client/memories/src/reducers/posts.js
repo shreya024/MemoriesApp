@@ -1,13 +1,13 @@
-const posts = (state = [], action) => {
+const posts = (posts = [], action) => {
   switch (action.type) {
     case "FETCH_ALL":
       return action.payload;
 
     case "CREATE":
-      return state;
+      return [...posts, action.payload];
 
     default:
-      return state;
+      return posts;
   }
 };
 
