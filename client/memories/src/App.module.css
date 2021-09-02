@@ -1,4 +1,4 @@
-.App-header {
+.appBar {
   border-radius: 30;
   margin: 30px 0;
   display: flex;
@@ -7,6 +7,6 @@
   align-items: center;
 }
 
-.App-heading {
+.heading {
   color: rgba(0, 183, 255, 1);
 }
