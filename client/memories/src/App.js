@@ -11,7 +11,7 @@ const App = () => {
       <Container maxWidth="xl">
         <AppBar className={css.appBar} position="static" color="inherit">
           <Typography className={css.heading} variant="h2" align="center">
-            Memories
+            Best Places in the World
           </Typography>
         </AppBar>
         <Switch>
