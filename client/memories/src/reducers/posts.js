@@ -4,7 +4,8 @@ const posts = (posts = [], action) => {
       return posts.map((post) =>
         post._id === action.payload._id ? action.payload : post
       );
-
+    case "FETCH_BY_SEARCH":
+      return action.payload;
     case "FETCH_ALL":
       return action.payload;
     case "LIKE":
