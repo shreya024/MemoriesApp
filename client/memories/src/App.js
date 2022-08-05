@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import css from "./App.module.css";
 import PostDetails from "./components/PostDetails/PostDetails";
 import Preloader from "./components/Preloader";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/posts/:id" component={PostDetails} />
             </Switch>
           </Container>
+          <Footer />
         </BrowserRouter>
       ) : (
         <Preloader />
