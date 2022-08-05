@@ -54,10 +54,10 @@ const Form = ({ currentId, setCurrentId }) => {
         className={`${css.root} ${css.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">
+        <Typography variant="h6" className={css.head}>
           {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
-        <TextField
+        <TextField  className={css.other}
           name="creator"
           variant="outlined"
           label="Creator"
@@ -67,7 +67,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({ ...postData, creator: e.target.value })
           }
         />
-        <TextField
+        <TextField className={css.other}
           name="title"
           variant="outlined"
           label="Title"
@@ -75,7 +75,7 @@ const Form = ({ currentId, setCurrentId }) => {
           value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
-        <TextField
+        <TextField className={css.other}
           name="message"
           variant="outlined"
           label="Message"
@@ -87,7 +87,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({ ...postData, message: e.target.value })
           }
         />
-        <TextField
+        <TextField className={css.other}
           name="tags"
           variant="outlined"
           label="Tags (coma separated)"
@@ -107,21 +107,21 @@ const Form = ({ currentId, setCurrentId }) => {
           />
         </div>
         <Button
-          className={CSSKeyframeRule.buttonSubmit}
+          className={css.buttonSubmit}
           variant="contained"
           color="primary"
-          size="large"
-          type="submit"
-          fullWidth
+          size="small"
+          type="submit" 
         >
           Submit
         </Button>
         <Button
+          className={css.buttonClear}
           variant="contained"
           color="secondary"
           size="small"
           onClick={clear}
-          fullWidth
+          //fullWidth
         >
           Clear
         </Button>
