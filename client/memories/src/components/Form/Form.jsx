@@ -57,6 +57,15 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6" className={css.head}>
           {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
+        <div className={css.fileInput}>
+          <FileBase
+            type="file"
+            multiple={false}
+            onDone={({ base64 }) =>
+              setPostData({ ...postData, selectedFile: base64 })
+            }
+          />
+        </div>
         <TextField  className={css.other}
           name="creator"
           variant="outlined"
@@ -97,15 +106,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({ ...postData, tags: e.target.value.split(",") })
           }
         />
-        <div className={css.fileInput}>
-          <FileBase
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) =>
-              setPostData({ ...postData, selectedFile: base64 })
-            }
-          />
-        </div>
+        
         <Button
           className={css.buttonSubmit}
           variant="contained"
