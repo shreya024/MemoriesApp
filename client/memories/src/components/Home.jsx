@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ChipInput from "material-ui-chip-input";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Posts from "./Posts/Posts";
 import Form from "./Form/Form";
@@ -27,7 +27,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const query = useQuery();
-  const history = useHistory();
+  const history = useNavigate();
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
 
