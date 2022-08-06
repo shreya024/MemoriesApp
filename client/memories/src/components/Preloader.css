@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Square+Peg&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
+
+.loader {
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: #fff;
+  font-family: "Kaushan Script", cursive;
+  font-size: 4rem;
+  background: linear-gradient(
+    to right,
+    rgb(68, 68, 255),
+    rgb(33, 164, 33),
+    lightblue,
+    rgb(255, 255, 73)
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+}
