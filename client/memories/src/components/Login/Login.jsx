@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar,Button,CssBaseline,TextField,Typography,FormControlLabel,Checkbox,Link,Paper,Box,Grid, Container } from '@material-ui/core';
+import { Avatar,Button,CssBaseline,TextField,Typography,FormControlLabel,Checkbox,Link,Box,Grid} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -83,7 +83,7 @@ export default function Login() {
                   <AccountCircleIcon />
                 </Avatar>
                 <Typography className={classes.title} component="h1" variant="h4">
-                  Sign in
+                  Login
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                   <TextField
@@ -120,7 +120,7 @@ export default function Login() {
                     variant="contained"
                     sx={{ mt: 3 }}
                   >
-                    Sign In
+                    Login
                   </Button>
                   <Grid container>
                     <Grid item xs>
