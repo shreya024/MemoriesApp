@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { Container, AppBar, Typography } from "@material-ui/core";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Container } from "@material-ui/core";
 import Login from "./components/Login/Login"
 import Home from "./components/Home";
 import css from "./App.module.css";
@@ -11,13 +11,13 @@ const App = () => {
     <BrowserRouter>
       <Container maxWidth="xl">
         
-        <Switch>
-          <Route path="/" exact component={() => <Redirect to="/login" />} />
-          <Route path="/posts" exact component={Home} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/posts/search" exact component={Home} />
-          <Route path="/posts/:id" component={PostDetails} />
-        </Switch>
+        <Routes>
+          <Route path="/posts" element={<Home/>} />
+          <Route path="/login" index element={<Login/>} />
+          <Route path="/posts/search" element={<Home/>} />
+          <Route path="/posts/:id" element={<PostDetails/>} />
+          <Route path="/" element={<Navigate to="/login" replace/>} />
+        </Routes>
       </Container>
     </BrowserRouter>
   );
