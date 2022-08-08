@@ -9,8 +9,9 @@ function Header() {
     <div className="header">
       <div className="container">
 
-        <div className="logo">
-          <Link to='/'>
+        <div className="left-buttons">
+          <button className="side-bar"><MenuIcon id="menu-icon" /></button>
+          <Link className="logo" to='/'>
             <h2>memories</h2>
           </Link>
         </div>
@@ -22,7 +23,6 @@ function Header() {
 
         <div className="side-buttons">
           <Link to='/login' className="sign-in">Sign In</Link>
-          <button className="side-bar"><MenuIcon id="menu-icon" /></button>
         </div>
 
       </div>
