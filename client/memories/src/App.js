@@ -1,27 +1,43 @@
-import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { Container, AppBar, Typography } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate , useLocation } from "react-router-dom";
+import { Container} from "@material-ui/core";
 import Home from "./components/Home";
-import css from "./App.module.css";
+import Login from "./components/Login/Login";
 import PostDetails from "./components/PostDetails/PostDetails";
+import Preloader from "./components/Preloader";
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
+
   return (
-    <BrowserRouter>
-      <Container maxWidth="xl">
-        <AppBar className={css.appBar} position="static" color="inherit">
-          <Typography className={css.heading} variant="h2" align="center">
-            Best Places in the World
-          </Typography>
-        </AppBar>
-        <Switch>
-          <Route path="/" exact component={() => <Redirect to="/posts" />} />
-          <Route path="/posts" exact component={Home} />
-          <Route path="/posts/search" exact component={Home} />
-          <Route path="/posts/:id" component={PostDetails} />
-        </Switch>
-      </Container>
-    </BrowserRouter>
+    <>
+      {loading === false ? (
+        <>
+          {location.pathname === "/login" ? <></> : <Header />}
+          <Container maxWidth="xl">
+            
+          <Routes>
+            <Route path="/posts" element={<Home/>} />
+            <Route path="/login" index element={<Login/>} />
+            <Route path="/posts/search" element={<Home/>} />
+            <Route path="/posts/:id" element={<PostDetails/>} />
+            <Route path="/" element={<Navigate to="/login" replace/>} />
+          </Routes>
+          </Container>
+          {location.pathname === "/login" ? <></> : <Footer />}
+        </>
+      ) : (
+        <Preloader />
+      )}
+    </>
   );
 };
 

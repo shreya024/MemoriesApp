@@ -1,6 +1,14 @@
-.paper {
-  padding: 2px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Playfair+Display:ital,wght@1,500&family=Roboto+Flex:opsz@8..144&family=Ubuntu:wght@500&display=swap');
+
+*{
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 109px;
 }
+
+/* .paper {
+  padding: 2px;
+  width: 150%;
+} */
 
 .formcss {
   display: flex;
@@ -8,10 +16,37 @@
   justify-content: center;
   margin: 1px;
 }
+
 .fileInput {
   width: 97%;
-  margin: 10px 0;
+  margin: 10px 10px;
 }
-.buttonSubmit {
-  margin-bottom: 10;
+
+form{
+  border-width: 2px;
+  border-style: outset;
+  border-color: #006100;
+  padding: 2px 10px;
+}
+
+.head{
+  text-align: center;
+  padding-bottom: 0.4em;
+  border-bottom: 2px solid #006100;
+  margin-bottom: 2px;
+
+}
+
+.other{
+  width: 99%;
+  margin: 3px 0;
+}
+
+ .buttonSubmit {
+  margin-right: 50px;
+  padding: 8px;
+}
+.buttonClear{
+  padding: 8px;
+  margin-left: 80px;
 }

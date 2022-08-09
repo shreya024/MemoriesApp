@@ -1,0 +1,115 @@
+body {
+  padding-top: 70px;
+}
+
+.header {
+  background-color: #1c1c1c;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000000000000000;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  height: 70px;
+}
+
+.header .left-buttons {
+  display: flex;
+  align-items: center;
+}
+.header .left-buttons .side-bar {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 0;
+  line-height: 0;
+  cursor: pointer;
+}
+.header .left-buttons .side-bar #menu-icon {
+  font-size: 33px;
+}
+.header .left-buttons .logo {
+  margin-left: 30px;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    rgb(68, 68, 255),
+    rgb(33, 164, 33),
+    lightblue,
+    rgb(255, 255, 73)
+  );
+  -webkit-background-clip: text;
+  color: transparent !important;
+  text-decoration: none;
+}
+
+.header .search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.header .search-bar .search {
+  height: 37px;
+  width: 250px;
+  padding: 0 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+.header .search-bar .search-button {
+  background-color: #444;
+  color: #fff;
+  height: 37px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.header .search-bar .search-button #search-icon {
+  font-size: 24px;
+}
+
+.header .side-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header .side-buttons .sign-in {
+  background-color: #fff;
+  color: #333;
+  height: 37px;
+  width: 90px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 900px) {
+  .header .search-bar {
+    display: none;
+  }
+}
+@media screen and (max-width: 450px) {
+  .header .container {
+    padding: 0 20px;
+  }
+  .header .left-buttons .logo {
+    margin-left: 10px;
+  }
+}
