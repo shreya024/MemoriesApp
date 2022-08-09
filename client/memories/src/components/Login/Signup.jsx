@@ -55,7 +55,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Login() {
+export default function Signup() {
   const classes = useStyles();
 
   const handleSubmit = (event) => {
@@ -86,7 +86,7 @@ export default function Login() {
                   <AccountCircleIcon />
                 </Avatar>
                 <Typography className={classes.title} component="h1" variant="h4">
-                  Login
+                  Sign Up
                 </Typography>
                 <Box component="form" className={classes.box} noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                   <TextField
@@ -123,7 +123,7 @@ export default function Login() {
                     variant="contained"
                     sx={{ mt: 3 }}
                   >
-                    Login
+                    Sign Up
                   </Button>
                   <Grid container>
                     <Grid item xs>
@@ -132,8 +132,8 @@ export default function Login() {
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="signup">
-                        {"Don't have an account? Sign Up"}
+                      <Link href="login" variant="body2">
+                        {"Login"}
                       </Link>
                     </Grid>
                   </Grid>
