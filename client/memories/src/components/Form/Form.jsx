@@ -85,7 +85,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6" className={css.head}>
           {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
-        <div className={css.fileInput}>
+        {/* <div className={css.fileInput}>
           <FileBase
             type="file"
             multiple={false}
@@ -93,7 +93,7 @@ const Form = ({ currentId, setCurrentId }) => {
               setPostData({ ...postData, selectedFile: base64 })
             }
           />
-        </div>
+        </div> */}
         <TextField
           className={css.other}
           name="creator"
