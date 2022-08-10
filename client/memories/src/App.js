@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate , useLocation } from "react-router-dom";
-import { Container} from "@material-ui/core";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Container } from "@material-ui/core";
 import Home from "./components/Home";
 import Login from "./components/Login/Login";
 import PostDetails from "./components/PostDetails/PostDetails";
@@ -23,14 +23,13 @@ const App = () => {
         <>
           {location.pathname === "/login" ? <></> : <Header />}
           <Container maxWidth="xl">
-            
-          <Routes>
-            <Route path="/posts" element={<Home/>} />
-            <Route path="/login" index element={<Login/>} />
-            <Route path="/posts/search" element={<Home/>} />
-            <Route path="/posts/:id" element={<PostDetails/>} />
-            <Route path="/" element={<Navigate to="/login" replace/>} />
-          </Routes>
+            <Routes>
+              <Route path="/posts" element={<Home />} />
+              <Route path="/login" index element={<Login />} />
+              <Route path="/posts/search" element={<Home />} />
+              <Route path="/posts/:id" element={<PostDetails />} />
+              <Route path="/" element={<Navigate to="/login" replace />} />
+            </Routes>
           </Container>
           {location.pathname === "/login" ? <></> : <Footer />}
         </>
