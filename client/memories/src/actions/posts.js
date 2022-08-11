@@ -61,3 +61,20 @@ export const deletePost = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+export const bookMarkPost = (id) => async(dispatch)=>{
+  try {
+    const res = await api.bookMarkPost(id);
+    dispatch({type:"BOOKMARK", payload:res})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const fetchBookMarks = (userId) =>async () =>{
+  try {
+    await api.fetchBookMarks(userId);
+  } catch (error) {
+    console.log(error);
+  }
+}

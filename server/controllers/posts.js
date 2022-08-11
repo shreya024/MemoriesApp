@@ -174,34 +174,33 @@ export const bookmarkPost = async (req, res) => {
 
   if (!req.body.userId)
     return res.status(404).json({ message: "User Id not found" });
+
   try {
     const userBookMarkModel = getBookMarkModel(req.body.userId);
-
-    if (await userBookMarkModel.find({ PostId: id }))
-      return res.status(200).json({ message: "This post is already bookmarked" });
-
+    if ((await userBookMarkModel.find({ PostId: id })).length != 0)  
+      return res.status(200).json({ message: "Already BookMarked" });
     if (!await postMessage.findById(id))
       return res.status(404).json({ message: "No such post exists" });
-
     const bookMarked = new userBookMarkModel({
       PostId: id
-    })
+    });
     await bookMarked.save();
 
-    res.status(200).json({ message: "Bookmarked!" });
+    res.status(200).json({ message: bookMarked });
   }
   catch (err) {
+    console.log(err);
     res.status(404).json({ message: err.message });
   }
 }
 
 
 export const getBookMarkedPosts = async (req, res) => {
-  if (!req.body.userId)
-    return res.status(400).json({ message: "No userId provided" });
+  if (!req.query.user)
+    return res.status(400).json({ message: "Missing `userid`" });
 
   try {
-    const userBookMarkModel = getBookMarkModel(req.body.userId);
+    const userBookMarkModel = getBookMarkModel(req.query.user);
 
     const allBookMarks = await userBookMarkModel.find();
     if (!allBookMarks.length)
