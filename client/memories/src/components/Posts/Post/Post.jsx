@@ -21,7 +21,7 @@ const Post = ({ post, setCurrentId }) => {
     <Card className={css.card}>
       <CardMedia
         className={css.media}
-        image={post.selectedFile}
+        image={post.selectedFiles[0]}
         title={post.title}
       ></CardMedia>
       <div className={css.overlay}>
