@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-
+import getBookMarkModel from "../models/bookMarks.js";
+import postMessage from "../models/postMessage.js";
 import PostMessage from "../models/postMessage.js";
 
 const router = express.Router();
@@ -45,8 +46,8 @@ export const getPostsBySearch = async (req, res) => {
     });
 
 
-    if(!posts.length)
-     return res.status(404).json({message:"No posts found"});
+    if (!posts.length)
+      return res.status(404).json({ message: "No posts found" });
     res.status(200).json({ data: posts });
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -162,5 +163,53 @@ export const likePost = async (req, res) => {
   }
 
 };
+
+export const bookmarkPost = async (req, res) => {
+  const { id } = req.params;
+  if (!id)
+    return res.status(406).json({ message: "Params `id` is missing" });
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`Incorrect format for id: ${id}`);
+
+  if (!req.body.userId)
+    return res.status(404).json({ message: "User Id not found" });
+
+  try {
+    const userBookMarkModel = getBookMarkModel(req.body.userId);
+    if ((await userBookMarkModel.find({ PostId: id })).length != 0)  
+      return res.status(200).json({ message: "Already BookMarked" });
+    if (!await postMessage.findById(id))
+      return res.status(404).json({ message: "No such post exists" });
+    const bookMarked = new userBookMarkModel({
+      PostId: id
+    });
+    await bookMarked.save();
+
+    res.status(200).json({ message: bookMarked });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+}
+
+
+export const getBookMarkedPosts = async (req, res) => {
+  if (!req.query.user)
+    return res.status(400).json({ message: "Missing `userid`" });
+
+  try {
+    const userBookMarkModel = getBookMarkModel(req.query.user);
+
+    const allBookMarks = await userBookMarkModel.find();
+    if (!allBookMarks.length)
+      return res.status(200).json({ message: "You haven't bookmarked anything" });
+    res.status(200).json({ data: allBookMarks });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 
 export default router;
