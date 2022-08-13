@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import css from "./Post.module.css";
 import {
   Card,
@@ -10,12 +10,15 @@ import {
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { likePost, deletePost } from "../../../actions/posts";
+import { likePost, deletePost,bookMarkPost } from "../../../actions/posts";
 
 const Post = ({ post, setCurrentId }) => {
+  const [bookmarked, setbookmarked] = useState(false);
   const dispatch = useDispatch();
   return (
     <Card className={css.card}>
@@ -64,6 +67,13 @@ const Post = ({ post, setCurrentId }) => {
           onClick={() => dispatch(likePost(post._id))}
         >
           <ThumbUpAltIcon fontSize="small" /> Like {post.likeCount}{" "}
+        </Button>
+        <Button size="small" color="primary" onClick={()=>{
+          setbookmarked(!bookmarked);
+          dispatch(bookMarkPost(post._id));
+        }}>
+         { !bookmarked && <BookmarkAddIcon fontSize="small" />}
+          {bookmarked && <BookmarkAddedIcon fontSize="small"/>}
         </Button>
         <Button
           size="small"

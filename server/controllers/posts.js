@@ -1,12 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
-
+import getBookMarkModel from "../models/bookMarks.js";
+import postMessage from "../models/postMessage.js";
 import PostMessage from "../models/postMessage.js";
 
 const router = express.Router();
 
 export const getPosts = async (req, res) => {
   const { page } = req.query;
+
+  if (!page || page <= 0)
+    res.status(406).json({ message: "Params `page` should be > 0" });
 
   try {
     const LIMIT = 4;
@@ -30,16 +34,23 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPostsBySearch = async (req, res) => {
-  const { searchQuery, tags } = req.query;
+  let { searchQuery, tags } = req.query;
+
+  if (!tags)
+    return res.status(404).json({ error: "Params `tags` is required" });
 
   try {
     const title = new RegExp(searchQuery, "i");
     const posts = await PostMessage.find({
       $or: [{ title }, { tags: { $in: tags.split(",") } }],
     });
-    res.json({ data: posts });
+
+
+    if (!posts.length)
+      return res.status(404).json({ message: "No posts found" });
+    res.status(200).json({ data: posts });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -48,6 +59,11 @@ export const getPost = async (req, res) => {
 
   try {
     const post = await PostMessage.findById(id);
+
+    if (!post) {
+      res.status(404).json({ message: "No Post by this Id exists" });
+      return;
+    }
 
     res.status(200).json(post);
   } catch (error) {
@@ -61,6 +77,7 @@ export const createPost = async (req, res) => {
   selectedFiles.map((fileobj)=>{
     files.push(fileobj.base64)
   })
+  try{
   const newPostMessage = new PostMessage({
     title,
     message,
@@ -68,8 +85,9 @@ export const createPost = async (req, res) => {
     creator,
     tags,
   });
+ 
 
-  try {
+
     await newPostMessage.save();
 
     res.status(201).json(newPostMessage);
@@ -86,42 +104,126 @@ export const updatePost = async (req, res) => {
     files.push(fileobj.base64);
   });
 
+  if (!id) {
+    res.status(406).json({ error: "Params `id` is required" });
+    return;
+  }
+
+
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+    return res.status(404).send(`Incorrect format for id: ${id}`);
 
-  const updatedPost = { creator, title, message, tags, selectedFiles:files, _id: id };
 
-  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+  try {
+      const updatedPost = { creator, title, message, tags, selectedFiles:files, _id: id };
 
-  res.json(updatedPost);
+
+
+    if (!(await PostMessage.findById(id))) {
+      res.status(404).json({ error: "No post of any such id exists" });
+      return;
+    }
+    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ error: error });
+  }
+
 };
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+  if (!id) {
+    return res.status(406).json({ error: "Missing parameter `id`" })
+  }
 
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`Incorrect format for id: ${id}`);
+
+
+  if (!(await PostMessage.findById(id))) {
+    return res.status(404).json({ error: "No post of any such id exists" });;
+  }
   await PostMessage.findByIdAndRemove(id);
 
-  res.json({ message: "Post deleted successfully." });
+  res.status(200).json({ message: "Post deleted successfully." });
 };
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
+  if (!id)
+    return res.status(406).json({ error: "Params `id` is required" });
+
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+    return res.status(404).send(`Incorrect format for id: ${id}`);
 
   const post = await PostMessage.findById(id);
+  if (!post)
+    return res.status(404).json({ error: "No post of this id exists" });
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(
-    id,
-    { likeCount: post.likeCount + 1 },
-    { new: true }
-  );
+  try {
+    const updatedPost = await PostMessage.findByIdAndUpdate(
+      id,
+      { likeCount: post.likeCount + 1 },
+      { new: true }
+    );
 
-  res.json(updatedPost);
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+
 };
+
+export const bookmarkPost = async (req, res) => {
+  const { id } = req.params;
+  if (!id)
+    return res.status(406).json({ message: "Params `id` is missing" });
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`Incorrect format for id: ${id}`);
+
+  if (!req.body.userId)
+    return res.status(404).json({ message: "User Id not found" });
+
+  try {
+    const userBookMarkModel = getBookMarkModel(req.body.userId);
+    if ((await userBookMarkModel.find({ PostId: id })).length != 0)  
+      return res.status(200).json({ message: "Already BookMarked" });
+    if (!await postMessage.findById(id))
+      return res.status(404).json({ message: "No such post exists" });
+    const bookMarked = new userBookMarkModel({
+      PostId: id
+    });
+    await bookMarked.save();
+
+    res.status(200).json({ message: bookMarked });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(404).json({ message: err.message });
+  }
+}
+
+
+export const getBookMarkedPosts = async (req, res) => {
+  if (!req.query.user)
+    return res.status(400).json({ message: "Missing `userid`" });
+
+  try {
+    const userBookMarkModel = getBookMarkModel(req.query.user);
+
+    const allBookMarks = await userBookMarkModel.find();
+    if (!allBookMarks.length)
+      return res.status(200).json({ message: "You haven't bookmarked anything" });
+    res.status(200).json({ data: allBookMarks });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 
 export default router;
