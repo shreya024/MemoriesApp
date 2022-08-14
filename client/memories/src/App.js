@@ -7,6 +7,7 @@ import Signup from "./components/Login/Signup";
 import PostDetails from "./components/PostDetails/PostDetails";
 import Preloader from "./components/Preloader";
 import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ const App = () => {
     <>
       {loading === false ? (
         <>
+          {location.pathname === "/login" ? <></> : <Header />}
           <Container maxWidth="xl">
             
           <Routes>

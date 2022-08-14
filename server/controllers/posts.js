@@ -8,6 +8,9 @@ const router = express.Router();
 export const getPosts = async (req, res) => {
   const { page } = req.query;
 
+  if (!page || page <= 0)
+    res.status(406).json({ message: "Params `page` should be > 0" });
+
   try {
     const LIMIT = 4;
     const startIndex = (Number(page) - 1) * LIMIT;
@@ -30,16 +33,23 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPostsBySearch = async (req, res) => {
-  const { searchQuery, tags } = req.query;
+  let { searchQuery, tags } = req.query;
+
+  if (!tags)
+    return res.status(404).json({ error: "Params `tags` is required" });
 
   try {
     const title = new RegExp(searchQuery, "i");
     const posts = await PostMessage.find({
       $or: [{ title }, { tags: { $in: tags.split(",") } }],
     });
-    res.json({ data: posts });
+
+
+    if(!posts.length)
+     return res.status(404).json({message:"No posts found"});
+    res.status(200).json({ data: posts });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
@@ -48,6 +58,11 @@ export const getPost = async (req, res) => {
 
   try {
     const post = await PostMessage.findById(id);
+
+    if (!post) {
+      res.status(404).json({ message: "No Post by this Id exists" });
+      return;
+    }
 
     res.status(200).json(post);
   } catch (error) {
@@ -58,15 +73,14 @@ export const getPost = async (req, res) => {
 export const createPost = async (req, res) => {
   const { title, message, selectedFile, creator, tags } = req.body;
 
-  const newPostMessage = new PostMessage({
-    title,
-    message,
-    selectedFile,
-    creator,
-    tags,
-  });
-
   try {
+    const newPostMessage = new PostMessage({
+      title,
+      message,
+      selectedFile,
+      creator,
+      tags,
+    });
     await newPostMessage.save();
 
     res.status(201).json(newPostMessage);
@@ -77,44 +91,76 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
+  if (!id) {
+    res.status(406).json({ error: "Params `id` is required" });
+    return;
+  }
   const { title, message, creator, selectedFile, tags } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+    return res.status(404).send(`Incorrect format for id: ${id}`);
 
-  const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+  try {
+    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
 
-  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
 
-  res.json(updatedPost);
+    if (!(await PostMessage.findById(id))) {
+      res.status(404).json({ error: "No post of any such id exists" });
+      return;
+    }
+    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ error: error });
+  }
+
 };
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+  if (!id) {
+    return res.status(406).json({ error: "Missing parameter `id`" })
+  }
 
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`Incorrect format for id: ${id}`);
+
+
+  if (!(await PostMessage.findById(id))) {
+    return res.status(404).json({ error: "No post of any such id exists" });;
+  }
   await PostMessage.findByIdAndRemove(id);
 
-  res.json({ message: "Post deleted successfully." });
+  res.status(200).json({ message: "Post deleted successfully." });
 };
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
+  if (!id)
+    return res.status(406).json({ error: "Params `id` is required" });
+
   if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No post with id: ${id}`);
+    return res.status(404).send(`Incorrect format for id: ${id}`);
 
   const post = await PostMessage.findById(id);
+  if (!post)
+    return res.status(404).json({ error: "No post of this id exists" });
 
-  const updatedPost = await PostMessage.findByIdAndUpdate(
-    id,
-    { likeCount: post.likeCount + 1 },
-    { new: true }
-  );
+  try {
+    const updatedPost = await PostMessage.findByIdAndUpdate(
+      id,
+      { likeCount: post.likeCount + 1 },
+      { new: true }
+    );
 
-  res.json(updatedPost);
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+
 };
 
 export default router;
