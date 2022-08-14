@@ -42,13 +42,13 @@ class TimeLine extends Component {
             </CustomTab>
           </TabList>
           <TabPanel>
-              <div>Posts</div>
+              <h2>Posts</h2>
           </TabPanel>
           <TabPanel>
-            <div>Followers</div>
+            <h2>Followers</h2>
           </TabPanel>
           <TabPanel>
-            <div>Following</div>
+            <h2>Following</h2>
           </TabPanel>
           </Tabs>
     </>
