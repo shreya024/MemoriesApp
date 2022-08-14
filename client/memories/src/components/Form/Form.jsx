@@ -12,7 +12,7 @@ const Form = ({ currentId, setCurrentId }) => {
     title: "",
     message: "",
     tags: "",
-    selectedFile: "",
+    selectedFiles: [],
   });
   const post = useSelector((state) =>
     currentId ? state.posts.find((message) => message._id === currentId) : null
@@ -30,7 +30,7 @@ const Form = ({ currentId, setCurrentId }) => {
       title: "",
       message: "",
       tags: "",
-      selectedFile: "",
+      selectedFiles: [],
     });
   };
 
@@ -45,6 +45,7 @@ const Form = ({ currentId, setCurrentId }) => {
       clear();
     }
   };
+ 
 
   return (
     <Paper className={CSSKeyframeRule.paper}>
@@ -106,6 +107,17 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({ ...postData, tags: e.target.value.split(",") })
           }
         />
+
+        <div className={css.fileInput}>
+          <FileBase
+            type="file"
+            multiple={true}
+            onDone={( base64 ) =>
+              setPostData({ ...postData, selectedFiles: base64 })
+            }
+          />
+        </div>
+
         
         <Button
           className={css.buttonSubmit}
