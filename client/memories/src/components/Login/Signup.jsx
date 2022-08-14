@@ -57,9 +57,6 @@ const useStyles = makeStyles({
 
 
 function Signup() {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     const classes = useStyles();
 
@@ -68,8 +65,8 @@ function Signup() {
         const enteredData = new FormData(event.currentTarget);
         
         const entry = {
-            name : enteredData.get('name'),
-            email : enteredData.get('email'),
+            email: enteredData.get('email'),
+            username : enteredData.get('username'),
             password : enteredData.get('password')
         };
 
@@ -82,6 +79,10 @@ function Signup() {
         })
 
         const data = await response.json();
+
+        if(data.status === 'ok') {
+            window.location.href = '/login'
+        }
         
     };
 
@@ -112,10 +113,10 @@ function Signup() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="name"
-                                label="Your Name"
-                                name="name"
-                                autoComplete="name"
+                                id="email"
+                                label="email"
+                                name="email"
+                                autoComplete="email"
                                 autoFocus
                             />
                             <TextField
@@ -123,10 +124,10 @@ function Signup() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                label="User Name"
+                                name="username"
+                                autoComplete="username"
                                 autoFocus
                             />
                             <TextField

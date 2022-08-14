@@ -3,10 +3,10 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import model from "./models/user.model.js";
-// import postMessage from "./models/postMessage.js";
 import postRoutes from "./routes/posts.js";
+import session from 'express-session';
+import passport from "passport";
 
-// const User = require('./models/user.model')
 const app = express();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -14,6 +14,13 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/posts", postRoutes);
 app.use(express.json());
+app.use(session({
+  secret: "this is a secret",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //https://www.mongodb.com/cloud/atlas
 
@@ -29,36 +36,36 @@ mongoose
   .catch((error) => console.log(error.message));
 
 
-app.post('/api/Signup' , async (req, res) => {
-  console.log(req.body)
-  try {
-    await model.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    })
-    res.json({status: 'ok'})
-  } catch (err) {
-    res.json({status: 'error'})
-  }
-});
-app.post('/api/Login' , async (req, res) => {
-  console.log(req.body)
-  
-    const user = await model.findOne({
-      email: req.body.email,
-      password: req.body.password,
-    })
-
-    if (user) {
-      return res.json({status: 'ok'})
-    }else {
+app.post('/api/Signup' , (req, res) => {
+  model.register(new model({email: req.body.email, username: req.body.username}), req.body.password, function(err, user){
+    if(err) {
+      console.log(err);
       res.json({status: 'error'})
+    } else {
+      passport.authenticate("local")(req, res, function() {
+        res.json({status: 'ok'});
+      })
     }
-  
+  })
+
 });
 
-// app.get('/', (req, res) => {
-//   res.send("hello world");
-// });
+app.post('/api/Login' , async (req, res) => {
+  
+    const user = new model({
+      username: req.body.username,
+      password: req.body.password,
+    })
 
+    req.logIn(user, function(err) {
+      if(err) {
+        console.log(err);
+        return res.json({status: 'error'})
+      } else {
+        passport.authenticate("local")(req, res, function() {
+          return res.json({status: 'ok'});
+        })
+      }
+    })
+    
+});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar,Button,CssBaseline,TextField,Typography,FormControlLabel,Checkbox,Link,Box,Grid} from '@material-ui/core';
+import { Avatar, Button, CssBaseline, TextField, Typography, FormControlLabel, Checkbox, Link, Box, Grid } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     // backgroundColor: "rgba(255,255,255,0.2)",
     borderRadius: "10px",
     backdropFilter: "blur(14px)",
-    
+
   },
   title: {
     textTransform: "capitalize",
@@ -55,93 +55,110 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Login() {
+function Login() {
   const classes = useStyles();
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const enteredData = new FormData(event.currentTarget);
+
+    const entry = {
+      username: enteredData.get('username'),
+      password: enteredData.get('password')
+    };
+
+    const response = await fetch('http://localhost:5000/api/Login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(entry),
+    })
+
+    const data = await response.json();
+    if(data) {
+      alert('Login succesful');
+      window.location.href = './Home.jsx'
+    }else {
+      alert('Login unsuccesful')
+    }
   };
 
   return (
-    
-        <div className={classes.outer}>
-            <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Grid className={classes.comp} container xs={12} sm={8} md={5} elevation={6} square>
-              <Box
-                sx={{
-                  my: 8,
-                  mx: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
+
+    <div className={classes.outer}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Grid className={classes.comp} container xs={12} sm={8} md={5} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar className={classes.avatar} sx={{ m: 1 }}>
+              <AccountCircleIcon />
+            </Avatar>
+            <Typography className={classes.title} component="h1" variant="h4">
+              Login
+            </Typography>
+            <Box component="form" className={classes.box} noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                className={classes.button}
+                type="submit"
+                fullWidth
+                color="primary"
+                variant="contained"
+                sx={{ mt: 3 }}
               >
-                <Avatar className={classes.avatar} sx={{ m: 1 }}>
-                  <AccountCircleIcon />
-                </Avatar>
-                <Typography className={classes.title} component="h1" variant="h4">
-                  Login
-                </Typography>
-                <Box component="form" className={classes.box} noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Button
-                    className={classes.button}
-                    type="submit"
-                    fullWidth
-                    color="primary"
-                    variant="contained"
-                    sx={{ mt: 3 }}
-                  >
-                    Login
-                  </Button>
-                  <Grid container>
-                    <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Link href="signup">
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Box>
-            </Grid>
-          </ThemeProvider>
-        </div>
+                Login
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="signup">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </ThemeProvider>
+    </div>
   );
 }
- 
+export default Login;
