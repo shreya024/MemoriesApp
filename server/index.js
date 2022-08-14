@@ -15,7 +15,7 @@ app.use(cors());
 app.use("/posts", postRoutes);
 app.use(express.json());
 app.use(session({
-  secret: "this is a secret",
+  //  secret: "this is a secret", <-- Secret is any string that needs to be added --> 
   resave: false,
   saveUninitialized: false
 }));
