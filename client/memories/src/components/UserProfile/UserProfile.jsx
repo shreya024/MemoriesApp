@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import Posts from '../Posts/Posts'
+import TimeLine from '../TimeLine/TimeLine';
 import'./UserProfile.css'
 
 
@@ -28,13 +28,14 @@ function UserProfile() {
                     <div className='field-name'>post</div>
                 </div>
             </div>
+            <span className='description'>I am an extrovert and i love coding</span>
         </div>
         <div className='button-container'>
             <Button variant="contained" style={{backgroundColor:"hsl(212, 100%, 15%)"}}>Follow</Button>
-            <Button variant='outlined'>Message</Button>
+            <Button variant='contained' style={{backgroundColor:"rgb(83, 96, 153)"}}>Message</Button>
         </div>
     </section>
-    <Posts />
+    <TimeLine />
     </>
   )
 }

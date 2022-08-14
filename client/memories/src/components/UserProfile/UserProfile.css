@@ -1,11 +1,12 @@
 .user-profile-container{
     height: 15rem;
     margin: 2rem;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     border-radius: 30px;
-    color:hsl(212, 100%, 15%);
+    /* color:hsl(212, 100%, 15%); */
+    color:hsl(0, 0%, 80%);
 }
 .image-container{
    margin: 2rem;
@@ -40,7 +41,8 @@
     margin-bottom: 0.5rem;
 }
 .text-container .userName{
-    color:rgb(109, 109, 109);
+    /* color:rgb(109, 109, 109); */
+    color:hsl(0, 0%, 63%);
 }
 .text-container .info-section{
     width: 15rem;
