@@ -18,7 +18,10 @@ const Form = ({ currentId, setCurrentId }) => {
     title: "",
     message: "",
     tags: "",
-    selectedFile: "",
+    selectedFile: {
+      name: "",
+      content: ""
+    },
     touchedCreator: false,
     touchedTitle: false,
     touchedMessage: false,
@@ -41,7 +44,10 @@ const Form = ({ currentId, setCurrentId }) => {
       title: "",
       message: "",
       tags: "",
-      selectedFile: ""
+      selectedFile: {
+        name: "",
+        content: ""
+      }
     });
   };
 
@@ -49,11 +55,19 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     if (
-      postData.creator !== "" &&
-      postData.message !== "" &&
-      postData.selectedFile !== "" &&
+      (postData.creator !== "" ||
+        postData.creator.match(/^[0-9]+$/) == null ||
+        postData.creator.length < 30) &&
+      (postData.message !== "" ||
+        postData.message.match(/^[0-9]+$/) == null ||
+        postData.message.length < 200) &&
+      postData.selectedFile.name.match(
+        /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
+      ) &&
       postData.tags !== "" &&
-      postData.title !== ""
+      (postData.title !== "" ||
+        postData.title.match(/^[0-9]+$/) == null ||
+        postData.title.length < 70)
     ) {
       setPostData({ ...postData, tags: postData.tags.split(",") });
       if (currentId === 0) {
@@ -101,10 +115,18 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Creator"
           fullWidth
           value={postData.creator}
-          error={postData.touchedCreator && postData.creator === ""}
+          error={
+            (postData.touchedCreator && postData.creator === "") ||
+            postData.creator.match(/^[0-9]+$/) != null ||
+            postData.creator.length > 30
+          }
           helperText={
             postData.touchedCreator && postData.creator === ""
               ? "Enter a creator!"
+              : postData.creator.match(/^[0-9]+$/) != null
+              ? "Only Numbers are not accepted"
+              : postData.creator.length > 30
+              ? "Creator name should be less than 30 characters"
               : " "
           }
           required
@@ -123,10 +145,18 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Title"
           fullWidth
           value={postData.title}
-          error={postData.touchedTitle && postData.title === ""}
+          error={
+            (postData.touchedTitle && postData.title === "") ||
+            postData.title.match(/^[0-9]+$/) != null ||
+            postData.title.length > 50
+          }
           helperText={
             postData.touchedTitle && postData.title === ""
               ? "Enter a title!"
+              : postData.title.match(/^[0-9]+$/) != null
+              ? "Only Numbers are not accepted"
+              : postData.title.length > 50
+              ? "Title should be less than 50 characters"
               : " "
           }
           required
@@ -147,10 +177,18 @@ const Form = ({ currentId, setCurrentId }) => {
           multiline
           rows={4}
           value={postData.message}
-          error={postData.touchedMessage && postData.message === ""}
+          error={
+            (postData.touchedMessage && postData.message === "") ||
+            postData.message.match(/^[0-9]+$/) != null ||
+            postData.message.length > 200
+          }
           helperText={
             postData.touchedMessage && postData.message === ""
               ? "Enter a message!"
+              : postData.message.match(/^[0-9]+$/) != null
+              ? "Only Numbers are not accepted"
+              : postData.message.length > 200
+              ? "Message should be less than 200 characters"
               : " "
           }
           required
@@ -189,18 +227,31 @@ const Form = ({ currentId, setCurrentId }) => {
             type="file"
             multiple={false}
             required
-            onDone={({ base64 }) =>
+            onDone={(uploadedFile) => {
+              console.log(uploadedFile);
               setPostData({
                 ...postData,
-                selectedFile: base64,
+                selectedFile: {
+                  name: uploadedFile.name,
+                  content: uploadedFile.base64
+                },
                 touchedFile: true
-              })
-            }
+              });
+            }}
           />
           <FormHelperText
-            error={postData.touchedFile && postData.selectedFile === ""}>
-            {postData.touchedFile && postData.selectedFile === ""
-              ? "Enter a file!"
+            error={
+              postData.touchedFile &&
+              !postData.selectedFile.name.match(
+                /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
+              )
+            }>
+            {postData.touchedFile &&
+            (postData.selectedFile.content === "" ||
+              !postData.selectedFile.name.match(
+                /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
+              ))
+              ? "Enter a valid file!"
               : " "}
           </FormHelperText>
         </div>
