@@ -18,7 +18,7 @@ const Form = ({ currentId, setCurrentId }) => {
     title: "",
     message: "",
     tags: "",
-    selectedFile: {
+    selectedFiles: {
       name: "",
       content: ""
     },
@@ -44,7 +44,7 @@ const Form = ({ currentId, setCurrentId }) => {
       title: "",
       message: "",
       tags: "",
-      selectedFile: {
+      selectedFiles: {
         name: "",
         content: ""
       }
@@ -61,7 +61,7 @@ const Form = ({ currentId, setCurrentId }) => {
       (postData.message !== "" ||
         postData.message.match(/^[0-9]+$/) == null ||
         postData.message.length < 200) &&
-      postData.selectedFile.name.match(
+      postData.selectedFiles.name.match(
         /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
       ) &&
       postData.tags !== "" &&
@@ -69,7 +69,6 @@ const Form = ({ currentId, setCurrentId }) => {
         postData.title.match(/^[0-9]+$/) == null ||
         postData.title.length < 70)
     ) {
-      setPostData({ ...postData, tags: postData.tags.split(",") });
       if (currentId === 0) {
         dispatch(createPost(postData));
         clear();
@@ -104,7 +103,7 @@ const Form = ({ currentId, setCurrentId }) => {
             type="file"
             multiple={false}
             onDone={({ base64 }) =>
-              setPostData({ ...postData, selectedFile: base64 })
+              setPostData({ ...postData, selectedFiles: base64 })
             }
           />
         </div> */}
@@ -231,7 +230,7 @@ const Form = ({ currentId, setCurrentId }) => {
               console.log(uploadedFile);
               setPostData({
                 ...postData,
-                selectedFile: {
+                selectedFiles: {
                   name: uploadedFile.name,
                   content: uploadedFile.base64
                 },
@@ -242,13 +241,13 @@ const Form = ({ currentId, setCurrentId }) => {
           <FormHelperText
             error={
               postData.touchedFile &&
-              !postData.selectedFile.name.match(
+              !postData.selectedFiles.name.match(
                 /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
               )
             }>
             {postData.touchedFile &&
-            (postData.selectedFile.content === "" ||
-              !postData.selectedFile.name.match(
+            (postData.selectedFiles.content === "" ||
+              !postData.selectedFiles.name.match(
                 /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
               ))
               ? "Enter a valid file!"

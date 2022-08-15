@@ -14,7 +14,7 @@ export const getPosts = (page) => async (dispatch) => {
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   try {
     const {
-      data: { data },
+      data: { data }
     } = await api.fetchPostsBySearch(searchQuery);
     console.log(data);
     dispatch({ type: "FETCH_BY_SEARCH", payload: data });
@@ -25,6 +25,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
 export const createPost = (post) => async (dispatch) => {
   try {
+    console.log(post);
     const { data } = await api.createPost(post);
     dispatch({ type: "CREATE", payload: data });
   } catch (error) {
@@ -62,19 +63,19 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
-export const bookMarkPost = (id) => async(dispatch)=>{
+export const bookMarkPost = (id) => async (dispatch) => {
   try {
     const res = await api.bookMarkPost(id);
-    dispatch({type:"BOOKMARK", payload:res})
+    dispatch({ type: "BOOKMARK", payload: res });
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const fetchBookMarks = (userId) =>async () =>{
+export const fetchBookMarks = (userId) => async () => {
   try {
     await api.fetchBookMarks(userId);
   } catch (error) {
     console.log(error);
   }
-}
+};
