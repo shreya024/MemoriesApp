@@ -72,16 +72,22 @@ export const getPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const { title, message, selectedFile, creator, tags } = req.body;
+  const { title, message, selectedFiles, creator, tags } = req.body;
+  let files=[]
+  selectedFiles.map((fileobj)=>{
+    files.push(fileobj.base64)
+  })
+  try{
+  const newPostMessage = new PostMessage({
+    title,
+    message,
+    selectedFiles:files,
+    creator,
+    tags,
+  });
+ 
 
-  try {
-    const newPostMessage = new PostMessage({
-      title,
-      message,
-      selectedFile,
-      creator,
-      tags,
-    });
+
     await newPostMessage.save();
 
     res.status(201).json(newPostMessage);
@@ -92,17 +98,25 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
+  const { title, message, creator, selectedFiles, tags } = req.body;
+  let files = [];
+  selectedFiles.map((fileobj) => {
+    files.push(fileobj.base64);
+  });
+
   if (!id) {
     res.status(406).json({ error: "Params `id` is required" });
     return;
   }
-  const { title, message, creator, selectedFile, tags } = req.body;
+
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`Incorrect format for id: ${id}`);
 
+
   try {
-    const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
+      const updatedPost = { creator, title, message, tags, selectedFiles:files, _id: id };
+
 
 
     if (!(await PostMessage.findById(id))) {
