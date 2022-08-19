@@ -16,7 +16,7 @@ app.use("/posts", postRoutes);
 
 //https://www.mongodb.com/cloud/atlas
 
-const COONECTION_URL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.9gqh9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const COONECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
 mongoose

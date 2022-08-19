@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/search", getPostsBySearch);
 router.get("/", getPosts);
 router.post("/", createPost);
-router.get('/bookmarks/:user',getBookMarkedPosts);
+router.get('/bookmarks/',getBookMarkedPosts);
 router.get("/:id", getPost);
 router.patch("/:id", updatePost);
 router.delete("/:id", deletePost);
