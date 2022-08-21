@@ -1,0 +1,88 @@
+body {
+    color: white;
+}
+
+.message-container{
+    background-color: #101010;
+}
+
+.message-container *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.message-title{
+    padding: 0.5em 1em;
+}
+
+.message-content{
+    width: 100%;
+    background-color: #131414;
+    border-top: 1px #6c757d solid;
+}
+
+.message-sidebar{
+    width: 32%;
+    border-right: 1px #6c757d solid;
+}
+
+.message-sidebar-header{
+    padding: 1em;
+    border-bottom: 1px #6c757d solid;
+}
+
+.message-container .MuiTextField-root{
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.sidebar-title {
+    margin: 0 0 0.7em;
+}
+
+.searchbar{
+    padding: 0.7em 1em;
+    outline: none;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+}
+
+.message-chat{
+    width: 68%;
+}
+
+.person{
+    padding: 0.6em 0.7em;
+    transition: all 0.5ms;
+}
+
+.person:hover{
+    background-color: #232323;
+}
+
+.last-time{
+    align-self: start;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    font-size: 0.7rem;
+}
+
+.message-sidebar-content{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.message-sidebar-content::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.message-sidebar-content::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.message-sidebar-content::-webkit-scrollbar-thumb {
+    background-color: rgb(47, 47, 47);
+    border-radius: 10px;
+}
