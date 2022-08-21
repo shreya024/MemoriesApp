@@ -7,6 +7,7 @@ import PostDetails from "./components/PostDetails/PostDetails";
 import Preloader from "./components/Preloader";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import Message from "./components/Message/Message";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ const App = () => {
           <Container maxWidth="xl">
             <Routes>
               <Route path="/posts" element={<Home />} />
+              <Route path="/message" element={<Message />} />
               <Route path="/login" index element={<Login />} />
               <Route path="/posts/search" element={<Home />} />
               <Route path="/posts/:id" element={<PostDetails />} />
