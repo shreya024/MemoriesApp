@@ -75,6 +75,7 @@ export const createPost = async (req, res) => {
   // selectedFiles.map((fileobj) => {
   //   files.push(fileobj.content);
   // });
+  console.log(selectedFiles);
   files.push(selectedFiles.content);
   try {
     const newPostMessage = new PostMessage({
@@ -203,18 +204,16 @@ export const bookmarkPost = async (req, res) => {
 };
 
 export const getBookMarkedPosts = async (req, res) => {
-  if (!req.query.user)
+  if (!req.query.userid)
     return res.status(400).json({ message: "Missing `userid`" });
-
   try {
-    const userBookMarkModel = getBookMarkModel(req.query.user);
-
+    const userBookMarkModel = getBookMarkModel(req.query.userid);
     const allBookMarks = await userBookMarkModel.find();
-    if (!allBookMarks.length)
+    if (allBookMarks.length==0)
       return res
         .status(200)
         .json({ message: "You haven't bookmarked anything" });
-    res.status(200).json({ data: allBookMarks });
+    return res.status(200).json({ data: allBookMarks });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

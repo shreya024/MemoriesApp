@@ -8,16 +8,19 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
-
+// import Carousel from "react-simply-carousel";
 import css from "./Form.module.css";
 import { createPost, updatePost } from "../../actions/posts";
+import { Carousel } from "react-carousel-minimal";
 
 const Form = ({ currentId, setCurrentId }) => {
+  const [cdata,setCdata]=useState([])
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
     message: "",
     tags: "",
+    multipleImage:[],
     selectedFiles: {
       name: "",
       content: ""
@@ -28,13 +31,25 @@ const Form = ({ currentId, setCurrentId }) => {
     touchedTags: false,
     touchedFile: false
   });
+
+  useEffect(()=>{
+    if(postData.multipleImage.length >0){
+  CarouselImg();
+    }
+   
+  },[postData])
+
   const post = useSelector((state) =>
     currentId ? state.posts.find((message) => message._id === currentId) : null
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (post) setPostData(post);
+    if (post) 
+    {setPostData(post)};
+    if (postData.multipleImage){
+    CarouselImg();
+    }
   }, [post]);
 
   const clear = () => {
@@ -88,25 +103,42 @@ const Form = ({ currentId, setCurrentId }) => {
     }
   };
 
+  const captionStyle = {
+    fontSize: '2em',
+    fontWeight: 'bold',
+  }
+  const slideNumberStyle = {
+    fontSize: '20px',
+    fontWeight: 'bold',
+  }
+
+   const CarouselImg=()=>{
+    const ddata=[]
+    for (let i=0;i< postData.multipleImage.length;i++ ) {
+      
+        ddata.push({ image: postData.multipleImage[i].base64,caption: postData.title })
+     
+    }
+    setCdata(ddata);
+   
+
+   }
+
+
   return (
     <Paper className={css.paper}>
       <form
         autoComplete="off"
         noValidate
         className={`${css.root} ${css.form}`}
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+      >
         <Typography variant="h6" className={css.head}>
           {currentId ? `Editing "${post.title}"` : "Creating a Memory"}
         </Typography>
-        {/* <div className={css.fileInput}>
-          <FileBase
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) =>
-              setPostData({ ...postData, selectedFiles: base64 })
-            }
-          />
-        </div> */}
+
+        <div className={css.fileInput}></div>
+
         <TextField
           className={css.other}
           name="creator"
@@ -133,7 +165,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({
               ...postData,
               creator: e.target.value,
-              touchedCreator: true
+              touchedCreator: true,
             })
           }
         />
@@ -163,7 +195,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({
               ...postData,
               title: e.target.value,
-              touchedTitle: true
+              touchedTitle: true,
             })
           }
         />
@@ -195,7 +227,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({
               ...postData,
               message: e.target.value,
-              touchedMessage: true
+              touchedMessage: true,
             })
           }
         />
@@ -217,13 +249,17 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({
               ...postData,
               tags: e.target.value,
-              touchedTags: true
+              touchedTags: true,
             })
           }
         />
         <div className={css.fileInput}>
           <FileBase
             type="file"
+            // multiple={true}
+            // onDone={(base64) => {
+            //   setPostData({ ...postData, selectedFiles: base64 });
+
             multiple={false}
             required
             onDone={(uploadedFile) => {
@@ -232,9 +268,9 @@ const Form = ({ currentId, setCurrentId }) => {
                 ...postData,
                 selectedFiles: {
                   name: uploadedFile.name,
-                  content: uploadedFile.base64
+                  content: uploadedFile.base64,
                 },
-                touchedFile: true
+                touchedFile: true,
               });
             }}
           />
@@ -244,7 +280,8 @@ const Form = ({ currentId, setCurrentId }) => {
               !postData.selectedFiles.name.match(
                 /\.(jpg|jpeg|png|gif|mov|mp4|webm|m4v)$/
               )
-            }>
+            }
+          >
             {postData.touchedFile &&
             (postData.selectedFiles.content === "" ||
               !postData.selectedFiles.name.match(
@@ -254,12 +291,55 @@ const Form = ({ currentId, setCurrentId }) => {
               : " "}
           </FormHelperText>
         </div>
+
+        <div className={css.fileInput}>
+          <FileBase
+            type="file"
+            multiple={true}
+            onDone={(base64) => {
+              setPostData({ ...postData, multipleImage: base64 });
+            }
+          }
+          />
+        </div>
+
+        {cdata.length > 0 ? (
+          <Carousel
+            data={cdata}
+            time={2000}
+            width="850px"
+            height="500px"
+            captionStyle={captionStyle}
+            radius="10px"
+            slideNumber={true}
+            slideNumberStyle={slideNumberStyle}
+            captionPosition="bottom"
+            automatic={true}
+            dots={true}
+            pauseIconColor="white"
+            pauseIconSize="40px"
+            slideBackgroundColor="darkgrey"
+            slideImageFit="cover"
+            thumbnails={false}
+            thumbnailWidth="100px"
+            style={{
+              textAlign: "center",
+              maxWidth: "850px",
+              maxHeight: "500px",
+              margin: "40px auto",
+            }}
+          />
+        ) : (
+          <></>
+        )}
+
         <Button
           className={css.buttonSubmit}
           variant="contained"
           color="primary"
           size="small"
-          type="submit">
+          type="submit"
+        >
           Submit
         </Button>
         <Button
