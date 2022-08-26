@@ -25,6 +25,8 @@ const posts = (state = [], action) => {
 
     case "DELETE":
       return state.filter((post) => post._id !== action.payload);
+    case "BOOKMARK":
+      return state.map(post => post.bookmarked = true)
     default:
       return state;
   }

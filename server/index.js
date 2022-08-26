@@ -2,6 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 import postRoutes from "./routes/posts.js";
 
@@ -14,8 +16,7 @@ app.use("/posts", postRoutes);
 
 //https://www.mongodb.com/cloud/atlas
 
-const COONECTION_URL =
-  "mongodb+srv://Shreya:x0uxvu6CfgQcSdSq@cluster0.9gqh9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const COONECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
 mongoose
