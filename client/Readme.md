@@ -233,3 +233,8 @@ userId= USER_ID_OF_THE_USER
             }
         }
     ```
+
+### 9. Messages Page
+
+* ROUTE - `{BASE_URL}/message`
+* Type - **UI Improvement**
