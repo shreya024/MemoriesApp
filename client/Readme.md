@@ -238,3 +238,9 @@ userId= USER_ID_OF_THE_USER
 
 * ROUTE - `{BASE_URL}/message`
 * Type - **UI Improvement**
+
+### 10. User Profile Pages
+
+* ROUTE - `{BASE_URL}/UserProfile`
+
+For example consider a website named "sampleHomePage.com" then to view the User Profile page , the URL is "sampleHomePage.com/UserProfile" .
