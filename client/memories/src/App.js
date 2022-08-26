@@ -8,6 +8,8 @@ import Preloader from "./components/Preloader";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Message from "./components/Message/Message";
+import UserProfile from './components/UserProfile/UserProfile'
+
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -31,6 +33,7 @@ const App = () => {
               <Route path="/posts/search" element={<Home />} />
               <Route path="/posts/:id" element={<PostDetails />} />
               <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="/UserProfile" element={<UserProfile />} />
             </Routes>
           </Container>
           {location.pathname === "/login" ? <></> : <Footer />}

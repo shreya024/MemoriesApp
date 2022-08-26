@@ -30,6 +30,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3",
     "react-simply-carousel": "^8.3.5",
+    "react-tabs": "^3.2.3",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.5",
