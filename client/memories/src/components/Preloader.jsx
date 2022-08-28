@@ -2,6 +2,8 @@ import React from "react";
 import Lottie from "react-lottie";
 import "./Preloader.css";
 import * as dots from "./97930-loading.json";
+import { ThemeContext } from "../App";
+
 
 const defaultOptions = {
   loop: true,
@@ -13,8 +15,9 @@ const defaultOptions = {
 };
 
 function Preloader() {
+  const { setTheme, theme } = React.useContext(ThemeContext);
   return (
-    <div className="loader">
+    <div className={theme === "Light"? "loader-light" :"loader"}>
       <div className="title">
         <h2>memories</h2>
       </div>

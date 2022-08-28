@@ -116,6 +116,7 @@ body {
 }
 .light{
   background-color: #c9d5ce;
+  background-color: var(--bg-color-light);
   color: black;
 }
 .header .search-bar .search-button-light {

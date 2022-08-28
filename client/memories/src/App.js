@@ -15,6 +15,13 @@ export const ThemeContext = React.createContext();
 
 const App = () => {
   const [theme, setTheme] = useState("Light");
+
+  const changeBgPNG = document.getElementById("body-theme");
+  if (theme !== "Dark"){
+       changeBgPNG.className = "body-light";
+  }else{
+    changeBgPNG.className = "body-dark";
+  }
   const themeData = { theme, setTheme };
   const [loading, setLoading] = useState(true);
   const location = useLocation();
