@@ -120,8 +120,8 @@ body {
   color: black;
 }
 .header .search-bar .search-button-light {
-  background-color:var(--bg-color-light) ;
-  color: #444;
+  background-color: #444;
+  color: #fff;
   height: 37px;
   width: 40px;
   display: flex;
