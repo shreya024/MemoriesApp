@@ -1,3 +1,8 @@
+:root {
+  --bg-color-light: #6495ed;
+  --color-light: black;
+}
+
 body {
   padding-top: 70px;
 }
@@ -86,6 +91,46 @@ body {
 .header .side-buttons .sign-in {
   background-color: #fff;
   color: #333;
+  height: 37px;
+  width: 90px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* light theme  */
+.header .search-bar-light {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.light{
+  background-color: #3782a3;
+  color: black;
+}
+.header .search-bar .search-button-light {
+  background-color:var(--bg-color-light) ;
+  color: #444;
+  height: 37px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.header .side-buttons .sign-in-light {
+  background-color: var(--bg-color-light);
+  color: var(--color-light);
   height: 37px;
   width: 90px;
   border-radius: 5px;
