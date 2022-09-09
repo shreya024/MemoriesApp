@@ -1,17 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 .border {
   border: solid;
 }
 .fullHeightCard {
   height: 100%;
 }
-.card {
+/* .card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 15px;
   height: 100%;
   position: relative;
-}
+} */
 .media {
   height: 0;
   padding-top: 56.25%;
@@ -42,7 +43,9 @@
   padding: 0 16px;
 }
 .cardActions {
-  padding: 0 16px 8px 16px;
+  /* padding: 0 2em 1em 2em; */
   display: flex;
   justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
 }
