@@ -11,7 +11,18 @@ import Message from "./components/Message/Message";
 import UserProfile from './components/UserProfile/UserProfile'
 
 
+export const ThemeContext = React.createContext();
+
 const App = () => {
+  const [theme, setTheme] = useState("Light");
+
+  const changeBgPNG = document.getElementById("body-theme");
+  if (theme !== "Dark"){
+       changeBgPNG.className = "body-light";
+  }else{
+    changeBgPNG.className = "body-dark";
+  }
+  const themeData = { theme, setTheme };
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   useEffect(() => {
@@ -22,8 +33,9 @@ const App = () => {
 
   return (
     <>
-      {loading === false ? (
-        <>
+      <ThemeContext.Provider value={themeData}>
+        {loading === false ? (
+          <>
           {location.pathname === "/login" ? <></> : <Header />}
           <Container maxWidth="xl">
             <Routes>
@@ -38,9 +50,11 @@ const App = () => {
           </Container>
           {location.pathname === "/login" ? <></> : <Footer />}
         </>
-      ) : (
-        <Preloader />
-      )}
+
+        ) : (
+          <Preloader />
+        )}
+      </ThemeContext.Provider>
     </>
   );
 };
