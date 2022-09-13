@@ -67,8 +67,8 @@ const Home = () => {
     
       <Grow in>
         <Container maxWidth="xl">
-          <AppBar className={css.appBar} position="static" color="inherit">
-            <Typography className={css.heading} variant="h2" align="center">
+          <AppBar className={css.appBar} position="static" color="inherit" style={{ background: "#adf8ff", borderRadius:"10px"}}>
+            <Typography className={css.heading} variant="h2" align="center" style={{ color:"black", textShadow: "2px 2px #ff0000"}}>
               Best Places in the World
             </Typography>
           </AppBar>
@@ -82,7 +82,7 @@ const Home = () => {
               <Posts setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <AppBar position="static" color="inherit">
+              <AppBar position="static" color="inherit" style={{ margin: "10px 0", padding:"10px", borderRadius:"9px", border:"2px solid #006100", borderStyle:"outset"}}>
                 <TextField
                   name="search"
                   variant="outlined"
@@ -93,7 +93,7 @@ const Home = () => {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <ChipInput
-                  style={{ margin: "10px 0" }}
+                  style={{ margin: "10px 0"}}
                   value={tags}
                   onAdd={handleAdd}
                   onDelete={handleDelete}

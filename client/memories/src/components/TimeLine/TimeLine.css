@@ -2,10 +2,10 @@
     display: flex;
     justify-content: space-evenly;
     font-size: 1.25rem;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 .timeline-header span{
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid rgb(106, 106, 106);
     padding: 1rem;
 }
 .timeline-header span:hover{

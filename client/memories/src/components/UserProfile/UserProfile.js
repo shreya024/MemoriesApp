@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import TimeLine from '../TimeLine/TimeLine';
 import'./UserProfile.css'
+import { Box } from '@material-ui/core';
 
 
 function UserProfile() {
@@ -35,7 +36,9 @@ function UserProfile() {
             <Button variant='contained' style={{backgroundColor:"rgb(83, 96, 153)"}}>Message</Button>
         </div>
     </section>
-    <TimeLine />
+    <Box sx={{ m: 13 }}>
+        <TimeLine/>
+    </Box>
     </>
   )
 }
