@@ -67,11 +67,11 @@ const Home = () => {
     
       <Grow in>
         <Container maxWidth="xl">
-          <AppBar className={css.appBar} position="static" color="inherit" style={{ background: "#adf8ff", borderRadius:"10px"}}>
+          {/* <AppBar className={css.appBar} position="static" color="inherit" style={{ background: "#adf8ff", borderRadius:"10px"}}>
             <Typography className={css.heading} variant="h2" align="center" style={{ color:"black", textShadow: "2px 2px #ff0000"}}>
               Best Places in the World
             </Typography>
-          </AppBar>
+          </AppBar> */}
           <Grid
             container
             justifyContent="space-between"
