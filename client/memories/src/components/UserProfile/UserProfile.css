@@ -6,7 +6,7 @@
     grid-template-columns: 1fr 3fr 1fr;
     border-radius: 30px;
     /* color:hsl(212, 100%, 15%); */
-    color:hsl(0, 0%, 80%);
+    color:hsl(0, 0%, 0%);
 }
 .image-container{
    margin: 2rem;
@@ -22,7 +22,7 @@
     height: 150px;
     width: 150px;
     border-radius: 50%;
-    border: 2px solid hsl(342, 100%, 88%);
+    border: 2px solid hsl(235, 87%, 70%);
 }
 .text-container{
     display: flex;
