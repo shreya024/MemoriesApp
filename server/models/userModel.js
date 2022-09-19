@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "@node-rs/bcrypt";
 import crypto from "crypto";
+import messageSchema from "./privateMessage";
 
 const userSchema = new mongoose.Schema(
   {
@@ -25,6 +26,36 @@ const userSchema = new mongoose.Schema(
 
     notifications: {
       type: ["String"]
+    },
+
+    followerCount: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+    followers: {
+      type: [userSchema]
+    },
+    following: {
+      type: [userSchema]
+    },
+
+    followingCount: {
+      type: Number,
+      default: 0,
+      required: true
+    },
+
+    privateMessages: {
+      content: {
+        userId: {
+          type: mongoose.Schema.objectId,
+          ref: "User"
+        },
+        messages: {
+          type: [messageSchema]
+        }
+      }
     },
 
     profile: {
