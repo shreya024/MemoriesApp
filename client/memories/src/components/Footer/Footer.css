@@ -49,6 +49,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color:white;
   background-color: rgb(0, 0, 0);
 }
 
@@ -56,6 +57,33 @@
   margin: 5px;
 }
 
+
+/* Liight theme-- */
+
+/* .footer-container-light {
+  width: 100%;
+  flex-shrink: 0;
+  background-color: rgb(28, 28, 28);
+  color: white;
+  position: relative;
+  top: 100%;
+  /* bottom: 0; */
+  /* margin-top: 2rem; */
+/* } */ 
+.light{
+  color:black;
+  background-color: white;
+}
+.footer-bottom-light{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:black;
+  background-color: white;
+}
+.footer-bottom-light > p {
+  margin: 5px;
+}
 @media screen and (max-width: 600px) {
   .footer {
     display: flex;

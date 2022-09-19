@@ -1,0 +1,35 @@
+.person , .person-content{
+    display: flex;
+}
+
+.avatar{
+    width: 3rem;
+    height: 3rem;
+}
+
+.person-profile{
+    border-radius: 50%;
+    object-fit: cover;
+    flex-grow: 1;
+    width: 3rem;
+    height: 3rem;
+}
+
+.person-content{
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 3;
+}
+
+.person-content div{
+    margin-left: 0.5em;
+}
+
+.person-subtitle{
+    font-size: 0.7em;
+}
+
+.person-subtitle, .last-time{
+    color:rgb(176, 176, 176);
+}
+

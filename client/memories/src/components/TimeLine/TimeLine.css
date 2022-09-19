@@ -1,0 +1,22 @@
+.timeline-header{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.25rem;
+    color: rgb(0, 0, 0);
+}
+.timeline-header span{
+    border-bottom: 2px solid rgb(106, 106, 106);
+    padding: 1rem;
+}
+.timeline-header span:hover{
+    border-bottom:  2px solid transparent;
+}
+.timeline-header span.active{
+    border-bottom: 2px solid hsl(212, 100%, 15%);
+}
+@media screen and (max-width:425px){
+    .timeline-header{
+        flex-direction: column;
+        font-size: 1rem;
+    }
+}
