@@ -10,3 +10,22 @@
 .heading {
   color: rgba(0, 183, 255, 1);
 }
+
+.bgchanger{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 1.05em;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 5%;
+  right: 1%;
+  background-color: #ffba08;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+
+.bgchanger:hover{
+  background-color: #faa307;
+  cursor: pointer;
+}
